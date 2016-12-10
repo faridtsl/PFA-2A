@@ -1,0 +1,123 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BallotServiceService WSDL service -->
+
+  <service name="BallotService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://Services"/>
+      <parameter name="wsdlServiceElement" value="BallotServiceService"/>
+      <parameter name="schemaQualified" value="http://Services,http://xml.apache.org/xml-soap"/>
+      <parameter name="wsdlServicePort" value="BallotService"/>
+      <parameter name="className" value="Services.BallotServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="BallotService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="publishResult" qname="operNS:publishResult" xmlns:operNS="http://Services" returnQName="retNS:publishResultReturn" xmlns:retNS="http://Services" returnType="rtns:Map" xmlns:rtns="http://xml.apache.org/xml-soap" soapAction="" >
+        <parameter qname="pns:idBallot" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="castVote" qname="operNS:castVote" xmlns:operNS="http://Services" soapAction="" >
+        <parameter qname="pns:ballotId" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:voterId" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:vote" xmlns:pns="http://Services" type="tns:integer" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="createBallot" qname="operNS:createBallot" xmlns:operNS="http://Services" returnQName="retNS:createBallotReturn" xmlns:retNS="http://Services" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:lib" xmlns:pns="http://Services" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:isPub" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idUser" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:endDate" xmlns:pns="http://Services" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="addOptions" qname="operNS:addOptions" xmlns:operNS="http://Services" soapAction="" >
+        <parameter qname="pns:idBallot" xmlns:pns="http://Services" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:options" xmlns:pns="http://Services" type="tns:ArrayOf_xsd_anyType" xmlns:tns="http://Services" itemQName="itns:item" xmlns:itns="http://Services"/>
+      </operation>
+      <parameter name="allowedMethods" value="castVote publishResult createBallot addOptions"/>
+
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>castVoteResponse"
+        type="java:Services.CastVoteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>publishResultResponse"
+        type="java:Services.PublishResultResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>createBallotResponse"
+        type="java:Services.CreateBallotResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>addOptions"
+        type="java:Services.AddOptions"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>addOptionsResponse"
+        type="java:Services.AddOptionsResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://xml.apache.org/xml-soap"
+        qname="ns:mapItem"
+        type="java:org.apache.xml.xml_soap.MapItem"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>publishResult"
+        type="java:Services.PublishResult"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>castVote"
+        type="java:Services.CastVote"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://Services"
+        qname="ns:>createBallot"
+        type="java:Services.CreateBallot"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://Services"
+        qname="ns:ArrayOf_xsd_anyType"
+        type="java:java.lang.Object[]"
+        innerType="cmp-ns:anyType" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

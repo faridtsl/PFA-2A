@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BallotServiceService WSDL service -->
+
+  <service name="BallotService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://Services"/>
+      <parameter name="wsdlServiceElement" value="BallotServiceService"/>
+      <parameter name="schemaQualified" value="http://Services,http://xml.apache.org/xml-soap"/>
+      <parameter name="wsdlServicePort" value="BallotService"/>
+      <parameter name="className" value="Services.BallotService"/>
+      <parameter name="wsdlPortType" value="BallotService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://Services" xmlns:retNS="http://Services" xmlns:rtns="http://xml.apache.org/xml-soap" name="publishResult" qname="operNS:publishResult" returnQName="retNS:publishResultReturn" returnType="rtns:Map" soapAction="">
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idBallot" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://Services" name="castVote" qname="operNS:castVote" soapAction="">
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:ballotId" type="tns:int"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:voterId" type="tns:int"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vote" type="tns:integer"/>
+      </operation>
+      <operation xmlns:operNS="http://Services" xmlns:retNS="http://Services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createBallot" qname="operNS:createBallot" returnQName="retNS:createBallotReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lib" type="tns:string"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:isPub" type="tns:int"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idUser" type="tns:int"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:endDate" type="tns:dateTime"/>
+      </operation>
+      <operation xmlns:operNS="http://Services" name="addOptions" qname="operNS:addOptions" soapAction="">
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idBallot" type="tns:int"/>
+        <parameter xmlns:pns="http://Services" xmlns:tns="http://Services" xmlns:itns="http://Services" qname="pns:options" type="tns:ArrayOf_xsd_anyType" itemQName="itns:item"/>
+      </operation>
+      <parameter name="allowedMethods" value="castVote publishResult createBallot addOptions"/>
+
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;castVoteResponse" type="java:Services.CastVoteResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;publishResultResponse" type="java:Services.PublishResultResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;createBallotResponse" type="java:Services.CreateBallotResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;addOptions" type="java:Services.AddOptions" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;addOptionsResponse" type="java:Services.AddOptionsResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;publishResult" type="java:Services.PublishResult" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;castVote" type="java:Services.CastVote" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://Services" qname="ns:&gt;createBallot" type="java:Services.CreateBallot" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://Services" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+  </service>
+</deployment>

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Classes.TAdministratorEntity" table="TAdministrator" schema="pfa">
+        <id name="idAdmin" type="java.lang.Integer">
+            <column name="idAdmin"/>
+            <generator class="increment"/>
+        </id>
+        <property name="secretKey" column="secretKey"/>
+        <many-to-one name="tVoterByIdVoter" class="Classes.TVoterEntity">
+            <column name="idVoter" not-null="true"/>
+        </many-to-one>
+        <set name="tBallotsByIdAdmin" inverse="true">
+            <key>
+                <column name="idAdmin" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TBallotEntity"/>
+        </set>
+    </class>
+    <class name="Classes.TBallotEntity" table="TBallot" schema="pfa">
+        <id name="idBallot" type="java.lang.Integer">
+            <column name="idBallot" />
+            <generator class="increment"/>
+        </id>
+        <property name="libBallot" column="libBallot"/>
+        <property name="publicKey" column="publicKey"/>
+        <property name="isPublic" column="isPublic"/>
+        <property name="endDate" column="endDate"/>
+        <many-to-one name="tAdministratorByIdAdmin" class="Classes.TAdministratorEntity">
+            <column name="idAdmin" not-null="true"/>
+        </many-to-one>
+        <set name="tOptionsByIdBallot" inverse="true">
+            <key>
+                <column name="idBallot" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TOptionEntity"/>
+        </set>
+        <set name="tResultsByIdBallot" inverse="true">
+            <key>
+                <column name="idBallot" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TResultEntity"/>
+        </set>
+        <set name="tVotesByIdBallot" inverse="true">
+            <key>
+                <column name="idBallot" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TVoteEntity"/>
+        </set>
+    </class>
+    <class name="Classes.TOptionEntity" table="TOption" schema="pfa">
+        <id name="idOption" type="java.lang.Integer">
+            <column name="idOption"/>
+            <generator class="increment"/>
+        </id>
+        <property name="idPrime" column="idPrime"/>
+        <property name="libOption" column="libOption"/>
+        <many-to-one name="tBallotByIdBallot" class="Classes.TBallotEntity">
+            <column name="idBallot" not-null="true"/>
+        </many-to-one>
+    </class>
+    <class name="Classes.TResultEntity" table="TResult" schema="pfa">
+        <id name="idResult" type="java.lang.Integer">
+            <column name="idResult"/>
+            <generator class="increment"/>
+        </id>
+        <property name="result" column="result"/>
+        <many-to-one name="tBallotByIdBallot" class="Classes.TBallotEntity">
+            <column name="idBallot" not-null="true"/>
+        </many-to-one>
+    </class>
+    <class name="Classes.TUserEntity" table="TUser" schema="pfa">
+        <id name="idUser" type="java.lang.Integer">
+            <column name="idUser"/>
+            <generator class="increment"/>
+        </id>
+        <property name="username" column="username"/>
+        <property name="mdp" column="mdp"/>
+        <many-to-one name="tVoterByIdVoter" class="Classes.TVoterEntity">
+            <column name="idVoter" not-null="true"/>
+        </many-to-one>
+    </class>
+    <class name="Classes.TVoteEntity" table="TVote" schema="pfa">
+        <id name="idVote" type="java.lang.Integer">
+            <column name="idVote"/>
+            <generator class="increment"/>
+        </id>
+        <many-to-one name="tBallotByIdBallot" class="Classes.TBallotEntity">
+            <column name="idBallot" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="tOptionByIdOption" class="Classes.TOptionEntity">
+            <column name="idOption" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="tVoterByIdVoter" class="Classes.TVoterEntity">
+            <column name="idVoter" not-null="true"/>
+        </many-to-one>
+    </class>
+    <class name="Classes.TVoterEntity" table="TVoter" schema="pfa">
+        <id name="idVoter" type="java.lang.Integer">
+            <column name="idVoter"/>
+            <generator class="increment"/>
+        </id>
+        <property name="idPrime" column="idPrime"/>
+        <property name="cin" column="cin"/>
+        <property name="nom" column="nom"/>
+        <property name="prenom" column="prenom"/>
+        <property name="numTel" column="numTel"/>
+        <property name="email" column="email"/>
+        <set name="tAdministratorsByIdVoter" inverse="true">
+            <key>
+                <column name="idVoter" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TAdministratorEntity"/>
+        </set>
+        <set name="tVotesByIdVoter" inverse="true">
+            <key>
+                <column name="idVoter" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="Classes.TVoteEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

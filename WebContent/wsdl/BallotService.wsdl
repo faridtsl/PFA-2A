@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://Services" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://Services" xmlns:intf="http://Services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://Services" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <element name="publishResult">
+    <complexType>
+     <sequence>
+      <element name="idBallot" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="publishResultResponse">
+    <complexType>
+     <sequence>
+      <element name="publishResultReturn" type="apachesoap:Map"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="castVote">
+    <complexType>
+     <sequence>
+      <element name="ballotId" type="xsd:int"/>
+      <element name="voterId" type="xsd:int"/>
+      <element name="vote" type="xsd:integer"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="castVoteResponse">
+    <complexType/>
+   </element>
+   <element name="createBallot">
+    <complexType>
+     <sequence>
+      <element name="lib" type="xsd:string"/>
+      <element name="isPub" type="xsd:int"/>
+      <element name="idUser" type="xsd:int"/>
+      <element name="endDate" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createBallotResponse">
+    <complexType>
+     <sequence>
+      <element name="createBallotReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addOptions">
+    <complexType>
+     <sequence>
+      <element name="idBallot" type="xsd:int"/>
+      <element name="options" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_anyType">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <element name="addOptionsResponse">
+    <complexType/>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Services"/>
+   <complexType name="mapItem">
+    <sequence>
+     <element name="key" nillable="true" type="xsd:anyType"/>
+     <element name="value" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="Map">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="publishResultRequest">
+
+      <wsdl:part element="impl:publishResult" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createBallotRequest">
+
+      <wsdl:part element="impl:createBallot" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createBallotResponse">
+
+      <wsdl:part element="impl:createBallotResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="publishResultResponse">
+
+      <wsdl:part element="impl:publishResultResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="castVoteResponse">
+
+      <wsdl:part element="impl:castVoteResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addOptionsResponse">
+
+      <wsdl:part element="impl:addOptionsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="castVoteRequest">
+
+      <wsdl:part element="impl:castVote" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addOptionsRequest">
+
+      <wsdl:part element="impl:addOptions" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BallotService">
+
+      <wsdl:operation name="publishResult">
+
+         <wsdl:input message="impl:publishResultRequest" name="publishResultRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:publishResultResponse" name="publishResultResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="castVote">
+
+         <wsdl:input message="impl:castVoteRequest" name="castVoteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:castVoteResponse" name="castVoteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createBallot">
+
+         <wsdl:input message="impl:createBallotRequest" name="createBallotRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createBallotResponse" name="createBallotResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addOptions">
+
+         <wsdl:input message="impl:addOptionsRequest" name="addOptionsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addOptionsResponse" name="addOptionsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BallotServiceSoapBinding" type="impl:BallotService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="publishResult">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="publishResultRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="publishResultResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="castVote">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="castVoteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="castVoteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createBallot">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createBallotRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createBallotResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addOptions">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addOptionsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addOptionsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BallotServiceService">
+
+      <wsdl:port binding="impl:BallotServiceSoapBinding" name="BallotService">
+
+         <wsdlsoap:address location="http://localhost:8080/PFAWebServ/services/BallotService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
